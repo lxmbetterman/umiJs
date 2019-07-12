@@ -149,15 +149,69 @@ const database = [
   {
     id: '6',
     breadcrumbParentId: '1',
-    name: 'Test',
+    name: 'Multi menu config',
     zh: {
-      name: 'zh-test'
+      name: '多级菜单配置'
     },
     'pt-br': {
-      name: 'pt-test'
+      name: 'pt-Multi menu config'
     },
-    icon: 'api',
-    route: '/test',
+    icon: 'camera-o',
+  },
+  {
+    id: '61',
+    breadcrumbParentId: '6',
+    menuParentId: '6',
+    name: 'Secondary page',
+    zh: {
+      name: '二级页面'
+    },
+    'pt-br': {
+      name: 'pt-secondary page'
+    },
+    icon: 'edit',
+    route: '/test/aaa',
+  },
+  {
+    id: '62',
+    breadcrumbParentId: '6',
+    menuParentId: '6',
+    name: 'Secondary folder',
+    zh: {
+      name: '二级文件夹'
+    },
+    'pt-br': {
+      name: 'pt-secondary folder'
+    },
+    icon: 'edit',
+  },
+  {
+    id: '611',
+    breadcrumbParentId: '62',
+    menuParentId: '62',
+    name: 'Third-index',
+    zh: {
+      name: '三级页面Index'
+    },
+    'pt-br': {
+      name: 'pt-Third index page'
+    },
+    icon: 'edit',
+    route: '/test/aaa/bbb',
+  },
+  {
+    id: '612',
+    breadcrumbParentId: '62',
+    menuParentId: '62',
+    name: 'Third-list',
+    zh: {
+      name: '三级页面List'
+    },
+    'pt-br': {
+      name: 'pt-Third list page'
+    },
+    icon: 'edit',
+    route: '/test/aaa/bbb/list',
   },
 ]
 
