@@ -78,7 +78,7 @@ class PrimaryLayout extends PureComponent {
       ? permissions.visit.includes(currentRoute.id)
       : false
 
-    // MenuParentId is equal to -1 is not a available menu.
+    // MenuParentId is equal to -1 is not a available menu. -1不现实菜单
     const menus = newRouteList.filter(_ => _.menuParentId !== '-1')
 
     const headerProps = {

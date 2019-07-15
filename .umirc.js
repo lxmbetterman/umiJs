@@ -3,6 +3,8 @@ import { resolve } from 'path'
 import { i18n } from './src/utils/config'
 
 export default {
+  base: '/admin/',
+  publicPath: 'http://cdn.com/foo',
   ignoreMomentLocale: true,
   targets: { ie: 9 },
   treeShaking: true,

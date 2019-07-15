@@ -11,7 +11,6 @@ export default {
     *login({ payload }, { put, call, select }) {
       const data = yield call(loginUser, payload)
       const { locationQuery } = yield select(_ => {
-        console.log(_,'全部的-models')
         return _.app
       })
       if (data.success) {

@@ -32,7 +32,7 @@ export default modelExtend(pageModel, {
           })
         }
       })
-    },
+    }
   },
 
   effects: {

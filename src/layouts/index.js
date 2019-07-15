@@ -63,7 +63,7 @@ class Layout extends Component {
     const { catalogs } = this.state
 
     let language = langFromPath(location.pathname)
-    console.log(location.pathname, language)
+    // console.log(location.pathname, language)
     // If the language pack is not loaded or is loading, use the default language
     if (!catalogs[language]) language = defaultLanguage
 

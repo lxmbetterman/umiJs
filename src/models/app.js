@@ -38,7 +38,7 @@ export default {
       },
     ],
   },
-  subscriptions: {
+  subscriptions: {  //创建的时候，就会依次执行内部的方法
     setup({ dispatch }) {
       dispatch({ type: 'query' })
     },
@@ -57,19 +57,22 @@ export default {
     setupRequestCancel({ history }) {
       history.listen(() => {
         const { cancelRequest = new Map() } = window
-
         cancelRequest.forEach((value, key) => {
+          console.log(value,key)
           if (value.pathname !== window.location.pathname) {
             value.cancel(CANCEL_REQUEST_MESSAGE)
             cancelRequest.delete(key)
           }
         })
       })
-    },
+    }
   },
   effects: {
+    // 登录操作，请求用户登录信息;如果已经登录，则会跳出不执行。
+    // 而登陆成功之后的数据会通过store存储,这样刷新页面可以保存数据状态
     *query({ payload }, { call, put, select }) {
-      // store isInit to prevent query trigger by refresh
+      console.log(process,'processprocessprocess')
+      // store isInit to prevent query trigger by refresh //登陆成功后isInit===true,为了防止刷新页面时触发 query
       const isInit = store.get('isInit')
       if (isInit) return
       const { locationPathname } = yield select(_ => _.app)
@@ -102,6 +105,7 @@ export default {
         store.set('routeList', routeList)
         store.set('permissions', permissions)
         store.set('user', user)
+        // 登录成功后设置 isInit 为 true 
         store.set('isInit', true)
         if (pathMatchRegexp(['/', '/login'], window.location.pathname)) {
           router.push({

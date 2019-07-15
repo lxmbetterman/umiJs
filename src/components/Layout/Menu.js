@@ -78,7 +78,7 @@ class SiderMenu extends PureComponent {
 
     // Generating tree-structured data for menu content.
     const menuTree = arrayToTree(menus, 'id', 'menuParentId')
-    console.log(menuTree,'menuTree')
+    // console.log(menuTree,'menuTree')
 
     // Find a menu that matches the pathname.
     const currentMenu = menus.find(
