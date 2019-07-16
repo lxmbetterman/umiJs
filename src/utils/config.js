@@ -36,4 +36,7 @@ module.exports = {
     ],
     defaultLanguage: 'en',
   },
+  define: {
+    "process.env.apiUrl": 'https://www.dev.com/'
+  },
 }

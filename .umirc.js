@@ -101,4 +101,9 @@ export default {
       'lodash',
     ],
   ],
+  define: {
+    "process.env.apiUrl": 'https://www.dev.com/',
+    "process.env.TTT": 'TTT',
+
+  },
 }

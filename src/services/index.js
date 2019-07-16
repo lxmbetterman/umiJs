@@ -1,7 +1,10 @@
 import request from 'utils/request'
 import { apiPrefix } from 'utils/config'
-
 import api from './api'
+
+console.log(process.env,'UUUUUUUU');
+
+console.log(process.env.TTT,'?DSADSADSAdwe')
 
 const gen = params => {
   let url = apiPrefix + params

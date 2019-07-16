@@ -104,6 +104,8 @@
     "lint:js": "eslint --ext .js src",
     "lint:style": "stylelint \"src/**/*.less\" --syntax less",
     "start": "umi dev",
+    "build-dev": "cross-env UMI_ENV=dev umi dev",
+    "build-prod": "cross-env UMI_ENV=prod umi dev",
     "test": "cross-env BABELRC=none umi test",
     "prettier": "prettier --write 'src/**/*.{js,less}'",
     "precommit": "lint-staged",
