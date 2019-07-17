@@ -70,6 +70,7 @@ class Layout extends Component {
     return (
       <LocaleProvider locale={languages[language]}>
         <I18nProvider language={language} catalogs={catalogs}>
+          {/*  约定 src/layouts/index.js 为全局路由，返回一个 React 组件，通过 props.children 渲染子组件 */}
           <BaseLayout>{children}</BaseLayout>
         </I18nProvider>
       </LocaleProvider>

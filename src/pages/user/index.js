@@ -80,6 +80,7 @@ class User extends PureComponent {
 
   get listProps() {
     const { dispatch, user, loading } = this.props
+    console.log(user,'rrr')
     const { list, pagination, selectedRowKeys } = user
 
     return {

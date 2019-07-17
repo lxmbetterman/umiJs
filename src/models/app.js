@@ -42,7 +42,7 @@ export default {
     setup({ dispatch }) {
       dispatch({ type: 'query' })
     },
-    setupHistory({ dispatch, history }) {
+    setupHistory({ dispatch, history }) { // 保存每一次的当前路由相关参数到state
       history.listen(location => {
         dispatch({
           type: 'updateState',

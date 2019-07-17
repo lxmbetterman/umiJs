@@ -53,6 +53,7 @@ class BaseLayout extends PureComponent {
         {/* 全屏加载遮罩层 */}
         <Loader fullScreen spinning={loading.effects['app/query']} />
         {/* Container is PrimaryLayout or PublicLayout */}
+        {/* children 是路由的二级动态加载组件 */}
         <Container>{children}</Container>
       </Fragment>
     )
