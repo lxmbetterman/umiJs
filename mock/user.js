@@ -29,6 +29,8 @@ const EnumRoleType = {
   DEVELOPER: 'developer',
 }
 
+
+// 这是不同的用户返回的 permissions 数据
 const userPermission = {
   DEFAULT: {
     visit: ['1', '2', '21', '7', '5', '51', '52', '53'],
@@ -91,13 +93,14 @@ const NOTFOUND = {
 }
 
 module.exports = {
-  [`POST ${ApiPrefix}/user/login`](req, res) {
+  [`POST ${ApiPrefix}/user/login`](req, res) { // 登录接口
     const { username, password } = req.body
     const user = adminUsers.filter(item => item.username === username)
 
     if (user.length > 0 && user[0].password === password) {
       const now = new Date()
       now.setDate(now.getDate() + 1)
+      // 后端添加cookie 用于判断用登录是否过期
       res.cookie(
         'token',
         JSON.stringify({ id: user[0].id, deadline: now.getTime() }),
@@ -117,11 +120,12 @@ module.exports = {
     res.status(200).end()
   },
 
-  [`GET ${ApiPrefix}/user`](req, res) {
+  [`GET ${ApiPrefix}/user`](req, res) { // 获取用户信息（登录成功后才有数据返回，否则返回'Not Login'）
     const cookie = req.headers.cookie || ''
     const cookies = qs.parse(cookie.replace(/\s/g, ''), { delimiter: ';' })
     const response = {}
     let user = {}
+    // 后端-存储了cookie 用于判断用户登录是否已经过期
     if (!cookies.token) {
       res.status(200).send({ message: 'Not Login' })
       return
@@ -137,17 +141,18 @@ module.exports = {
         user = other
       }
     }
-    response.user = user
+    response.user = user //登录成功后 userInfo 接口返回的数据
     res.json(response)
   },
 
+  // 用户信息 userInfo接口
   [`GET ${ApiPrefix}/users`](req, res) {
     const { query } = req
     let { pageSize, page, ...other } = query
     pageSize = pageSize || 10
     page = page || 1
 
-    let newData = database
+    let newData = database // 
     for (let key in other) {
       if ({}.hasOwnProperty.call(other, key)) {
         newData = newData.filter(item => {

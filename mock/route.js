@@ -1,6 +1,9 @@
 import { Constant } from './_utils'
 const { ApiPrefix } = Constant
 
+// 这里的数据是用来生成菜单的，
+// 路由的配置数据是page目录结构自动生成的。
+// 菜单数据要 符合 page目录结构 
 const database = [
   {
     id: '1',

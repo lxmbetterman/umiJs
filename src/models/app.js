@@ -71,21 +71,20 @@ export default {
     // 登录操作，请求用户登录信息;如果已经登录，则会跳出不执行。
     // 而登陆成功之后的数据会通过store存储,这样刷新页面可以保存数据状态
     *query({ payload }, { call, put, select }) {
-      console.log(process,'processprocessprocess')
       // store isInit to prevent query trigger by refresh //登陆成功后isInit===true,为了防止刷新页面时触发 query
       const isInit = store.get('isInit')
       if (isInit) return
       const { locationPathname } = yield select(_ => _.app)
-      // 登录获取 用户信息 （角色等信息）
-      const { success, user } = yield call(queryUserInfo, payload)
       
+      const { success, user } = yield call(queryUserInfo, payload) // 登录获取用户信息（角色等信息）
+      // 登录和获取用户信息是两个接口 两个步骤
       if (success && user) { 
-        // 获取用户信息成功后，再拉去所有的路由数据
+        // 获取用户信息成功后，再拉去所有的路由数据数组 
         const { list } = yield call(queryRouteList)
-        const { permissions } = user
+        const { permissions } = user // 包含 role 等属性数据
         let routeList = list
         // 根据用户角色 过滤路由数据
-        if (
+        if ( // 如果是管理员角色,则放入全部的路由id到permission.visit数组中
           permissions.role === ROLE_TYPE.ADMIN ||
           permissions.role === ROLE_TYPE.DEVELOPER
         ) {
