@@ -48,7 +48,7 @@ class User extends PureComponent {
     })
   }
 
-  get modalProps() {
+  get modalProps() { // dialog弹窗相关数据
     const { dispatch, user, loading, i18n } = this.props
     const { currentItem, modalVisible, modalType } = user
 
@@ -78,10 +78,10 @@ class User extends PureComponent {
     }
   }
 
-  get listProps() {
+  get listProps() { // 表格相关数据
     const { dispatch, user, loading } = this.props
     console.log(user,'rrr')
-    const { list, pagination, selectedRowKeys } = user
+    const { list, pagination, selectedRowKeys } = user // state中取数据
 
     return {
       dataSource: list,

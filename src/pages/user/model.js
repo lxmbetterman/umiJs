@@ -39,6 +39,7 @@ export default modelExtend(pageModel, {
     *query({ payload = {} }, { call, put }) {
       const data = yield call(queryUserList, payload)
       if (data) {
+        // put reducer change state data
         yield put({
           type: 'querySuccess',
           payload: {
