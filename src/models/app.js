@@ -91,22 +91,24 @@ export default {
           permissions.visit = list.map(item => item.id)
         } else {
           routeList = list.filter(item => {
+            // bpid: string, 面包屑导航的父id
+            // mpid: string, 菜单的父id, 缺省时为一级菜单, 为 - 1时在菜单中不显示
             const cases = [
-              permissions.visit.includes(item.id),
-              item.mpid
-                ? permissions.visit.includes(item.mpid) || item.mpid === '-1'
-                : true,
-              item.bpid ? permissions.visit.includes(item.bpid) : true,
+              permissions.visit.includes(item.id), // 当前id有权限
+              item.mpid ? permissions.visit.includes(item.mpid) || item.mpid === '-1' : true, // mpid缺省 或者 mpid有权限||mpid==='-1'
+              item.bpid ? permissions.visit.includes(item.bpid) : true, // bpid缺省 或者 bpid有权限
             ]
-            return cases.every(_ => _)
+            return cases.every(_ => _) // 都满足时 返回当前路由项到菜单中显示
           })
         }
+
+        // 保存在本地localStorage
         store.set('routeList', routeList)
-        store.set('permissions', permissions)
+        store.set('permissions', permissions) // [id1,id2,...] 后端返回
         store.set('user', user)
         // 登录成功后设置 isInit 为 true 
         store.set('isInit', true)
-        if (pathMatchRegexp(['/', '/login'], window.location.pathname)) {
+        if (pathMatchRegexp(['/', '/login'], window.location.pathname)) { // 参数二匹配参数一的anyone,return true。
           router.push({
             pathname: '/dashboard',
           })

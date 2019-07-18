@@ -9,18 +9,22 @@ const { CancelToken } = axios
 window.cancelRequest = new Map()
 
 export default function request(options) {
+  // 
+  // url 是apiPrefix + api的url地址
   let { data, url, method = 'get' } = options
   const cloneData = cloneDeep(data)
 
   try {
     let domain = ''
-    const urlMatch = url.match(/[a-zA-z]+:\/\/[^/]*/)
+    const urlMatch = url.match(/[a-zA-z]+:\/\/[^/]*/) // https://www.runoob.com/regexp/regexp-syntax.html => [https://www.runoob.com] 的数组
+
     if (urlMatch) {
-      ;[domain] = urlMatch
+      [domain] = urlMatch
       url = url.slice(domain.length)
     }
 
     const match = pathToRegexp.parse(url)
+    console.log(match)
     url = pathToRegexp.compile(url)(data)
 
     for (const item of match) {

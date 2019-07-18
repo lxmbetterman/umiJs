@@ -46,7 +46,7 @@ class PrimaryLayout extends PureComponent {
   }
 
   render() {
-    const { app, location, dispatch, children } = this.props
+    const { app, location, dispatch, children } = this.props // location form @withRouter
     const { theme, collapsed, notifications } = app
     const user = store.get('user') || {}
     const permissions = store.get('permissions') || {}
@@ -56,7 +56,7 @@ class PrimaryLayout extends PureComponent {
 
     // Localized route name.
 
-    const lang = langFromPath(location.pathname)
+    const lang = langFromPath(location.pathname) // pathname 是 baseurl 之后的 url
     const newRouteList =
       lang !== 'en'
         ? routeList.map(item => {
@@ -69,14 +69,13 @@ class PrimaryLayout extends PureComponent {
         : routeList
 
     // Find a route that matches the pathname.
+    console.log(location.pathname,'@@')
     const currentRoute = newRouteList.find(
-      _ => _.route && pathMatchRegexp(_.route, location.pathname)
+      _ => _.route && pathMatchRegexp(_.route, location.pathname) // route is path,
     )
 
     // Query whether you have permission to enter this page
-    const hasPermission = currentRoute
-      ? permissions.visit.includes(currentRoute.id)
-      : false
+    const hasPermission = currentRoute ? permissions.visit.includes(currentRoute.id) : false
 
     // MenuParentId is equal to -1 is not a available menu. -1不现实菜单
     const menus = newRouteList.filter(_ => _.menuParentId !== '-1')
