@@ -58,7 +58,6 @@ export default {
       history.listen(() => {
         const { cancelRequest = new Map() } = window
         cancelRequest.forEach((value, key) => {
-          console.log(value,key)
           if (value.pathname !== window.location.pathname) {
             value.cancel(CANCEL_REQUEST_MESSAGE)
             cancelRequest.delete(key)

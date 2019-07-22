@@ -24,7 +24,6 @@ export default function request(options) {
     }
 
     const match = pathToRegexp.parse(url)
-    console.log(match)
     url = pathToRegexp.compile(url)(data)
 
     for (const item of match) {

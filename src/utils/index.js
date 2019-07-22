@@ -105,7 +105,7 @@ export const deLangPrefix = curry(
  * @param   {string}    pathname   Add the language prefix in the pathname.
  * @return  {string}    Return the pathname after adding the language prefix.
  */
-export function addLangPrefix(pathname) {
+export function addLangPrefix(pathname) { // 先去掉lang prefix, 再加上lang prefix
   const prefix = langFromPath(window.location.pathname)
   return `/${prefix}${deLangPrefix(pathname)}`
 }

@@ -14,6 +14,7 @@ const {
 export default modelExtend(pageModel, {
   namespace: 'user',
 
+  // 页面的数据管理。
   state: {
     currentItem: {},
     modalVisible: false,
@@ -24,8 +25,10 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
+        // pathname 是http://localhost:7000/admin/en/user?page=1 中的 /en/user 部分
+        // pathMatchRegexp('/user', location.pathname) 看location.pathname是否完全按匹配 /user 的路由;不符合返回null
         if (pathMatchRegexp('/user', location.pathname)) {
-          const payload = location.query || { page: 1, pageSize: 10 }
+          const payload = location.query || { page: 1, pageSize: 10 } // 默认分页信息
           dispatch({
             type: 'query',
             payload,
@@ -36,10 +39,13 @@ export default modelExtend(pageModel, {
   },
 
   effects: {
+    // dispatch 触发effects中的 actions.
+    // put 触发reducer中的 mutations
     *query({ payload = {} }, { call, put }) {
       const data = yield call(queryUserList, payload)
       if (data) {
         // put reducer change state data
+        // put 相当于vuex中的commit 触发mutation.
         yield put({
           type: 'querySuccess',
           payload: {

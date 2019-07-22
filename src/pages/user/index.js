@@ -16,7 +16,6 @@ class User extends PureComponent {
   handleRefresh = newQuery => {
     const { location } = this.props
     const { query, pathname } = location
-
     router.push({
       pathname,
       search: stringify(
@@ -80,7 +79,6 @@ class User extends PureComponent {
 
   get listProps() { // 表格相关数据
     const { dispatch, user, loading } = this.props
-    console.log(user,'rrr')
     const { list, pagination, selectedRowKeys } = user // state中取数据
 
     return {
@@ -129,7 +127,7 @@ class User extends PureComponent {
     }
   }
 
-  get filterProps() {
+  get filterProps() { // 搜索栏相关数据...
     const { location, dispatch } = this.props
     const { query } = location
 
