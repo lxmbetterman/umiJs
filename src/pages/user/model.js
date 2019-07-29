@@ -4,22 +4,22 @@ import api from 'api'
 import { pageModel } from 'utils/model'
 
 const {
-  queryUserList,
-  createUser,
-  removeUser,
-  updateUser,
-  removeUserList,
-} = api
+  queryUserList, // 请求列表数据
+  createUser, // 新建
+  removeUser, // 删除一条数据
+  updateUser, // 编辑
+  removeUserList, // 删除多条数据
+} = api  // user页面要用的所有的请求方法
 
 export default modelExtend(pageModel, {
-  namespace: 'user',
+  namespace: 'user',  // user 页面 model的名称空间
 
   // 页面的数据管理。
   state: {
-    currentItem: {},
-    modalVisible: false,
-    modalType: 'create',
-    selectedRowKeys: [],
+    currentItem: {},     // 弹窗的表单数据
+    modalVisible: false, // 弹窗显示
+    modalType: 'create', // 弹窗类型 编辑/添加
+    selectedRowKeys: [], // 勾选项的 id 数组
   },
 
   subscriptions: {
@@ -39,13 +39,15 @@ export default modelExtend(pageModel, {
   },
 
   effects: {
-    // dispatch 触发effects中的 actions.
-    // put 触发reducer中的 mutations
+    // 用户列表的增删改成 各对应一个 disptch 请求相应接口。
+    // dispatch 触发effects中的 actions. 
+    // dispatch成功后回调 ,put 触发reducer中的 mutations
+    
     *query({ payload = {} }, { call, put }) {
-      const data = yield call(queryUserList, payload)
+      const data = yield call(queryUserList, payload) // 请求表格数据 和 分页
       if (data) {
-        // put reducer change state data
-        // put 相当于vuex中的commit 触发mutation.
+        // put reducer change state data // put 相当于vuex中的commit 触发mutation.
+        // 请求用户列表数据后 更新相应state
         yield put({
           type: 'querySuccess',
           payload: {
@@ -63,7 +65,7 @@ export default modelExtend(pageModel, {
     *delete({ payload }, { call, put, select }) {
       const data = yield call(removeUser, { id: payload })
       const { selectedRowKeys } = yield select(_ => _.user)
-      if (data.success) {
+      if (data.success) {// 删除成功后更新state
         yield put({
           type: 'updateState',
           payload: {
@@ -76,8 +78,8 @@ export default modelExtend(pageModel, {
     },
 
     *multiDelete({ payload }, { call, put }) {
-      const data = yield call(removeUserList, payload)
-      if (data.success) {
+      const data = yield call(removeUserList, payload) 
+      if (data.success) {// 删除多条数据成功后 更新相应state
         yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
       } else {
         throw data
@@ -86,7 +88,7 @@ export default modelExtend(pageModel, {
 
     *create({ payload }, { call, put }) {
       const data = yield call(createUser, payload)
-      if (data.success) {
+      if (data.success) { // 
         yield put({ type: 'hideModal' })
       } else {
         throw data

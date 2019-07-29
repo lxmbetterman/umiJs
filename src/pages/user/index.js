@@ -13,17 +13,18 @@ import Modal from './components/Modal'
 @withI18n()
 @connect(({ user, loading }) => ({ user, loading }))
 class User extends PureComponent {
+  // 翻页/删除 都要刷新页面
   handleRefresh = newQuery => {
     const { location } = this.props
     const { query, pathname } = location
-    router.push({
+    router.push({ // 这个方法已经处理了 lang perfix 前缀了，而且相同的路由会触发 subscriptions的history.listen的路由钩子
       pathname,
-      search: stringify(
+      search: stringify( // 把{a:'a',b:'b'} 序列化成 'a=a&b=b'的形式
         {
           ...query,
           ...newQuery,
         },
-        { arrayFormat: 'repeat' }
+        { arrayFormat: 'repeat' } // 允许重复
       ),
     })
   }
@@ -38,9 +39,8 @@ class User extends PureComponent {
         ids: selectedRowKeys,
       },
     }).then(() => {
-      this.handleRefresh({
-        page:
-          list.length === selectedRowKeys.length && pagination.current > 1
+      this.handleRefresh({ /// 删除后存在一个 currentPage 是多少的问题
+        page: list.length === selectedRowKeys.length && pagination.current > 1
             ? pagination.current - 1
             : pagination.current,
       })
@@ -96,9 +96,8 @@ class User extends PureComponent {
           type: 'user/delete',
           payload: id,
         }).then(() => {
-          this.handleRefresh({
-            page:
-              list.length === 1 && pagination.current > 1
+          this.handleRefresh({ /// 删除后存在一个 currentPage 是多少的问题
+            page: list.length === 1 && pagination.current > 1
                 ? pagination.current - 1
                 : pagination.current,
           })

@@ -42,6 +42,7 @@ class Filter extends Component {
     const { getFieldsValue } = form
 
     let fields = getFieldsValue()
+    console.log(fields,'@@@')
     fields = this.handleFields(fields)
     onFilterChange(fields)
   }
@@ -50,7 +51,7 @@ class Filter extends Component {
     const { form } = this.props
     const { getFieldsValue, setFieldsValue } = form
 
-    const fields = getFieldsValue()
+    const fields = getFieldsValue() // 获取所有的表单字段 {key1:value1,...}
     for (let item in fields) {
       if ({}.hasOwnProperty.call(fields, item)) {
         if (fields[item] instanceof Array) {
@@ -60,7 +61,7 @@ class Filter extends Component {
         }
       }
     }
-    setFieldsValue(fields)
+    setFieldsValue(fields) // 重置所有的表单字段
     this.handleSubmit()
   }
   handleChange = (key, values) => {
