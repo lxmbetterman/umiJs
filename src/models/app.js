@@ -82,6 +82,7 @@ export default {
         const { list } = yield call(queryRouteList)
         const { permissions } = user // 包含 role 等属性数据
         let routeList = list
+        console.log(list,'???')
         // 根据用户角色 过滤路由数据
         if ( // 如果是管理员角色,则放入全部的路由id到permission.visit数组中
           permissions.role === ROLE_TYPE.ADMIN ||
