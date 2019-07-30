@@ -62,7 +62,7 @@ class Layout extends Component {
     const { location, children } = this.props
     const { catalogs } = this.state
 
-    let language = langFromPath(location.pathname)
+    let language = langFromPath(location.pathname) // 获取路由参数中的语言标志
     // console.log(location.pathname, language)
     // If the language pack is not loaded or is loading, use the default language
     if (!catalogs[language]) language = defaultLanguage

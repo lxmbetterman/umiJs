@@ -102,11 +102,11 @@ module.exports = {
       now.setDate(now.getDate() + 1)
       // 后端添加cookie 用于判断用登录是否过期
       res.cookie(
-        'token',
-        JSON.stringify({ id: user[0].id, deadline: now.getTime() }),
+        'token', // cookies的key
+        JSON.stringify({ id: user[0].id, deadline: now.getTime() }), // cookies 的value
         {
-          maxAge: 900000,
-          httpOnly: true,
+          maxAge: 900000, // 过期时间 秒
+          httpOnly: true, // 了解什么是HttpOnly?
         }
       )
       res.json({ success: true, message: 'Ok' })

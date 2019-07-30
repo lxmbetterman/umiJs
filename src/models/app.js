@@ -39,16 +39,16 @@ export default {
     ],
   },
   subscriptions: {  //创建的时候，就会依次执行内部的方法
-    setup({ dispatch }) {
+    setup({ dispatch }) {// 这个地方每刷新一次页面就会执行一次,每次登录的时候也会执行一次
       dispatch({ type: 'query' })
     },
     setupHistory({ dispatch, history }) { // 保存每一次的当前路由相关参数到state
-      history.listen(location => {
+      history.listen(location => {// 路由钩子
         dispatch({
           type: 'updateState',
           payload: {
-            locationPathname: location.pathname,
-            locationQuery: location.query,
+            locationPathname: location.pathname, // 理解 location.pathname
+            locationQuery: location.query, // 理解 location.query
           },
         })
       })
@@ -70,11 +70,12 @@ export default {
     // 登录操作，请求用户登录信息;如果已经登录，则会跳出不执行。
     // 而登陆成功之后的数据会通过store存储,这样刷新页面可以保存数据状态
     *query({ payload }, { call, put, select }) {
+      alert(222)
       // store isInit to prevent query trigger by refresh //登陆成功后isInit===true,为了防止刷新页面时触发 query
       const isInit = store.get('isInit')
       if (isInit) return
       const { locationPathname } = yield select(_ => _.app)
-      
+      // 
       const { success, user } = yield call(queryUserInfo, payload) // 登录获取用户信息（角色等信息）
       // 登录和获取用户信息是两个接口 两个步骤
       if (success && user) { 
@@ -82,7 +83,6 @@ export default {
         const { list } = yield call(queryRouteList)
         const { permissions } = user // 包含 role 等属性数据
         let routeList = list
-        console.log(list,'???')
         // 根据用户角色 过滤路由数据
         if ( // 如果是管理员角色,则放入全部的路由id到permission.visit数组中
           permissions.role === ROLE_TYPE.ADMIN ||
@@ -110,10 +110,11 @@ export default {
         store.set('isInit', true)
         if (pathMatchRegexp(['/', '/login'], window.location.pathname)) { // 参数二匹配参数一的anyone,return true。
           router.push({
-            pathname: '/dashboard',
+            pathname: '/en/dashboard',
           })
         }
       } else if (queryLayout(config.layouts, locationPathname) !== 'public') {
+        alert(111)
         router.push({
           pathname: '/login',
           search: stringify({
