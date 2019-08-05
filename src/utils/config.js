@@ -9,7 +9,7 @@ module.exports = {
   layouts: [
     {
       name: 'primary',
-      include: [/.*/],
+      include: [/.*/], // 点 '.' 匹配所有字符  '*'表示0次或多次
       exclude: [/(\/(en|zh))*\/login/],
     },
   ],

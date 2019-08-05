@@ -197,6 +197,7 @@ export function queryAncestors(array, current, parentId, id = 'id') {
 }
 
 /**
+ * 查询当前的路由用的layout是哪一个？
  * Query which layout should be used for the current path based on the configuration.
  * @param   {layouts}     layouts   Layout configuration.
  * @param   {pathname}    pathname  Path name to be queried.

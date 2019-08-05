@@ -38,9 +38,9 @@ export default {
       },
     ],
   },
-  subscriptions: {  //创建的时候，就会依次执行内部的方法
+  subscriptions: {  //创建加载应用的时候，就会依次执行内部的方法
     setup({ dispatch }) {// 这个地方每刷新一次页面就会执行一次,每次登录的时候也会执行一次
-      dispatch({ type: 'query' })
+      dispatch({ type: 'query' }) //每次加载/刷新应用。都会执行一次
     },
     setupHistory({ dispatch, history }) { // 保存每一次的当前路由相关参数到state
       history.listen(location => {// 路由钩子
@@ -70,13 +70,12 @@ export default {
     // 登录操作，请求用户登录信息;如果已经登录，则会跳出不执行。
     // 而登陆成功之后的数据会通过store存储,这样刷新页面可以保存数据状态
     *query({ payload }, { call, put, select }) {
-      alert(222)
       // store isInit to prevent query trigger by refresh //登陆成功后isInit===true,为了防止刷新页面时触发 query
-      const isInit = store.get('isInit')
-      if (isInit) return
+      const isInit = store.get('isInit') // 封装的localstorage ,永久存储
+      if (isInit) return // 登录成功后刷新页面刷新
       const { locationPathname } = yield select(_ => _.app)
       // 
-      const { success, user } = yield call(queryUserInfo, payload) // 登录获取用户信息（角色等信息）
+      const { success, user } = yield call(queryUserInfo, payload) // 登录获取用户信息（角色等信息）/ 设置token到cookies
       // 登录和获取用户信息是两个接口 两个步骤
       if (success && user) { 
         // 获取用户信息成功后，再拉去所有的路由数据数组 
@@ -114,7 +113,7 @@ export default {
           })
         }
       } else if (queryLayout(config.layouts, locationPathname) !== 'public') {
-        alert(111)
+        // 判断当前的locationPathname 是不是/login
         router.push({
           pathname: '/login',
           search: stringify({
